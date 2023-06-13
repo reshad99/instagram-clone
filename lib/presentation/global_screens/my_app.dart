@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:instagram_clone/data/auth/bloc/auth/auth_bloc.dart';
 import 'package:instagram_clone/presentation/pages/auth/intro_screen.dart';
 import 'package:instagram_clone/services/router.dart';
 
