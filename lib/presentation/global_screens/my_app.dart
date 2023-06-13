@@ -16,12 +16,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           appBarTheme: const AppBarTheme(
         centerTitle: true,
+        elevation: 0,
+        color: Colors.transparent
       )),
       home: Builder(
         builder: (context) {
           return ScreenUtilInit(
+            designSize: MediaQuery.of(context).size,
             builder: (context, child) {
-              return IntroScreen();
+              return const IntroScreen();
             },
           );
         },
