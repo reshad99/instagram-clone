@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/presentation/pages/auth/intro_screen.dart';
 import 'package:instagram_clone/services/router.dart';
 
@@ -14,10 +15,10 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) => RouteGenerator.generate(settings),
       theme: ThemeData(
           appBarTheme: const AppBarTheme(
-        centerTitle: true,
-        elevation: 0,
-        color: Colors.transparent
-      )),
+              centerTitle: true,
+              elevation: 0,
+              color: Colors.transparent,
+              iconTheme: IconThemeData(color: primaryBlackColor, size: 28))),
       home: Builder(
         builder: (context) {
           return ScreenUtilInit(

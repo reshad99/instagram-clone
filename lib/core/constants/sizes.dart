@@ -1,0 +1,1 @@
+const double homeScreenIconSize = 30;

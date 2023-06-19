@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/core/helpers/helpers.dart';
+import 'package:instagram_clone/presentation/global_widgets/custom_text_button.dart';
 import 'package:instagram_clone/presentation/pages/auth/widgets/button_box.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -21,28 +22,27 @@ class IntroScreen extends StatelessWidget {
             Column(
               children: [
                 Image.asset(defaultLogo()),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 Image.asset(defaultUserPhoto()),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: 20.h,
                 ),
                 ButtonBox(
                     child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login-screen');
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: primaryButtonColor),
                   child: const Text('Log in'),
                 )),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: 10.h,
                 ),
                 ButtonBox(
-                    child: TextButton(
-                        style: ButtonStyle(
-                            overlayColor:
-                                MaterialStateProperty.all(Colors.transparent)),
+                    child: CustomTextButton(
                         onPressed: () {},
-                        child: const Text(
+                        child: Text(
                           'Switch accounts',
                           style: TextStyle(color: primaryButtonColor),
                         )))
@@ -59,7 +59,7 @@ class IntroScreen extends StatelessWidget {
                   color: Colors.grey.shade400,
                 ),
                 SizedBox(
-                  height: 100,
+                  height: 100.h,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
