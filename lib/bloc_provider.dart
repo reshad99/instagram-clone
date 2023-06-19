@@ -15,6 +15,5 @@ class BlocProviderInit {
       ],
       child: const MyApp(),
     );
-    ;
   }
 }

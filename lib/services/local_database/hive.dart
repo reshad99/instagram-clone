@@ -34,7 +34,7 @@ class HiveService implements LocalDatabase {
   }
 
   Future<List<dynamic>> getList(String boxName) async {
-    if (_box == null) return [];
+    // if (_box == null) return [];
     final box = Hive.box(boxName);
     final List<dynamic> items = box.values.toList().cast<dynamic>();
     return items;

@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:instagram_clone/core/constants/colors.dart';
-import 'package:instagram_clone/presentation/pages/auth/widgets/button_box.dart';
-import 'package:instagram_clone/presentation/pages/auth/widgets/custom_sized_box.dart';
 
 class CustomBlueButton extends StatelessWidget {
   const CustomBlueButton({
@@ -18,7 +16,7 @@ class CustomBlueButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-    onPressed();
+        onPressed();
       },
       style: ElevatedButton.styleFrom(backgroundColor: primaryButtonColor),
       child: child,

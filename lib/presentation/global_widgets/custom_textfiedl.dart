@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
-import 'package:instagram_clone/presentation/pages/auth/widgets/custom_sized_box.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
