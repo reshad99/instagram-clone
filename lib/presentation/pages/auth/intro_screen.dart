@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
@@ -5,6 +6,7 @@ import 'package:instagram_clone/core/helpers/helpers.dart';
 import 'package:instagram_clone/presentation/global_widgets/custom_text_button.dart';
 import 'package:instagram_clone/presentation/pages/auth/widgets/button_box.dart';
 
+@RoutePage()
 class IntroScreen extends StatelessWidget {
   const IntroScreen({super.key});
 

@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
@@ -7,6 +8,7 @@ import 'package:instagram_clone/presentation/global_widgets/custom_textfiedl.dar
 import 'package:instagram_clone/presentation/pages/auth/widgets/custom_sized_box.dart';
 import 'package:instagram_clone/presentation/global_widgets/grey_line.dart';
 
+@RoutePage()
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
