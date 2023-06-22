@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
-import 'package:instagram_clone/presentation/pages/auth/intro_screen.dart';
 import 'package:instagram_clone/services/routes/nested_router.dart';
-import 'package:instagram_clone/services/routes/router.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     NestedRouter nestedRouter = NestedRouter();
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
+      designSize: const Size(360, 800),
         builder: (context, child) => MaterialApp.router(
               debugShowCheckedModeBanner: false,
               title: 'Instagram clone',

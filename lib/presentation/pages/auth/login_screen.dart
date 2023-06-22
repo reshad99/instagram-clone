@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
@@ -7,6 +8,7 @@ import 'package:instagram_clone/presentation/global_widgets/custom_text_button.d
 import 'package:instagram_clone/presentation/global_widgets/custom_textfiedl.dart';
 import 'package:instagram_clone/presentation/pages/auth/widgets/custom_sized_box.dart';
 import 'package:instagram_clone/presentation/global_widgets/grey_line.dart';
+import 'package:instagram_clone/services/routes/nested_router.gr.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
@@ -84,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/home-screen');
+                  AutoRouter.of(context).navigate(const HomeRoute());
                 },
               ),
             ),

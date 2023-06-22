@@ -1,10 +1,12 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/core/helpers/helpers.dart';
 import 'package:instagram_clone/presentation/global_widgets/custom_text_button.dart';
 import 'package:instagram_clone/presentation/pages/auth/widgets/button_box.dart';
+import 'package:instagram_clone/services/routes/nested_router.gr.dart';
 
 @RoutePage()
 class IntroScreen extends StatelessWidget {
@@ -32,7 +34,7 @@ class IntroScreen extends StatelessWidget {
                 ButtonBox(
                     child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/login-screen');
+                    AutoRouter.of(context).navigate(const LoginRoute());
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: primaryButtonColor),
@@ -44,7 +46,7 @@ class IntroScreen extends StatelessWidget {
                 ButtonBox(
                     child: CustomTextButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           'Switch accounts',
                           style: TextStyle(color: primaryButtonColor),
                         )))
