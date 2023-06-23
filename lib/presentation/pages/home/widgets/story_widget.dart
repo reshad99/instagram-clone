@@ -6,10 +6,11 @@ class StoryWidget extends StatelessWidget {
   const StoryWidget({
     Key? key,
     required this.radius,
-    required this.photo,
+    required this.photo, required this.text,
   }) : super(key: key);
   final double radius;
   final String photo;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -34,39 +35,44 @@ class StoryWidget extends StatelessWidget {
     //   ),
     // ]);
 
-    return Container(
-      width: radius + 5,
-      height: radius + 5,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            storyRedColor,
-            storyPinkColor,
-            storyPinkColor,
-            storyRedColor,
-            storyYellowColor,
-            storyYellowColor,
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomLeft,
-        ),
-        color: Colors.white,
-        shape: BoxShape.circle,
-      ),
-      padding: const EdgeInsets.all(3.0),
-      child: Container(
-        decoration:
-            const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-        child: Padding(
-          padding: const EdgeInsets.all(2.0),
+    return Column(
+      children: [
+        Container(
+          width: radius + 5,
+          height: radius + 5,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                storyRedColor,
+                storyPinkColor,
+                storyPinkColor,
+                storyRedColor,
+                storyYellowColor,
+                storyYellowColor,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomLeft,
+            ),
+            color: Colors.white,
+            shape: BoxShape.circle,
+          ),
+          padding: const EdgeInsets.all(3.0),
           child: Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    image: AssetImage(photo), fit: BoxFit.cover)),
+            decoration: const BoxDecoration(
+                shape: BoxShape.circle, color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage(photo), fit: BoxFit.cover)),
+              ),
+            ),
           ),
         ),
-      ),
+        Text(text)
+      ],
     );
   }
 }

@@ -20,21 +20,31 @@ class HomeScreen extends StatelessWidget {
       body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         stories(),
         const GreyLine(sizeRate: 1),
-        const PostWidget()
+        Expanded(
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: PostWidget(),
+              );
+            },
+            itemCount: 5,
+          ),
+        )
       ]),
     );
   }
 
   SizedBox stories() {
     return SizedBox(
-      height: 80.h,
+      height: 90.h,
       child: ListView.builder(
         itemCount: storyData.length,
         itemBuilder: (context, index) {
           var story = storyData[index];
           return Padding(
               padding: const EdgeInsets.only(left: 7),
-              child: StoryWidget(radius: 60.w, photo: story['photo']));
+              child: StoryWidget(radius: 60.w, photo: story['photo'], text: 'joshua_l',));
         },
         scrollDirection: Axis.horizontal,
       ),

@@ -9,16 +9,20 @@ class CustomTextField extends StatelessWidget {
     required this.size,
     required this.controller,
     required this.hint,
+    this.prefixIcon,
   }) : super(key: key);
   final Size size;
   final TextEditingController controller;
   final String hint;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
+        disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          prefixIcon: prefixIcon ?? const SizedBox(),
           contentPadding:
               EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
           hintText: hint,

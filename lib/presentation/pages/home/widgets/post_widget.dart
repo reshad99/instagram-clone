@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/core/constants/sizes.dart';
 import 'package:instagram_clone/core/helpers/data.dart';
@@ -54,7 +55,37 @@ class PostWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 10.h,
+        ),
+        const Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text.rich(
+                  TextSpan(
+                    style: TextStyle(
+                      color: primaryBlackColor,
+                      fontSize: 17,
+                    ),
+                    children: [
+                      TextSpan(
+                          text: 'joshua_l',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text:
+                              ' The game was in Japan was amazing and I wanted to share some photod')
+                    ],
+                  ),
+                  overflow: TextOverflow
+                      .visible, // or TextOverflow.visible based on your requirement
+                ),
+              ),
             ],
           ),
         )

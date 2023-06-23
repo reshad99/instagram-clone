@@ -4,7 +4,7 @@ import 'package:instagram_clone/services/routes/nested_router.gr.dart';
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class NestedRouter extends $NestedRouter {
   @override
-  RouteType get defaultRouteType => RouteType.adaptive();
+  RouteType get defaultRouteType => const RouteType.adaptive();
 
   @override
   List<AutoRoute> get routes => [
