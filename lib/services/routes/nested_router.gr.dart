@@ -15,7 +15,7 @@ import 'package:instagram_clone/presentation/pages/auth/intro_screen.dart'
     as _i1;
 import 'package:instagram_clone/presentation/pages/auth/login_screen.dart'
     as _i2;
-import 'package:instagram_clone/presentation/pages/heart/heart_screen.dart'
+import 'package:instagram_clone/presentation/pages/notifications/notifications.dart'
     as _i5;
 import 'package:instagram_clone/presentation/pages/home/home_screen.dart'
     as _i3;

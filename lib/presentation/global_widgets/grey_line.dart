@@ -6,8 +6,10 @@ class GreyLine extends StatelessWidget {
   const GreyLine({
     Key? key,
     required this.sizeRate,
+    this.customColor,
   }) : super(key: key);
   final double sizeRate;
+  final Color? customColor;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class GreyLine extends StatelessWidget {
     return Container(
       height: 1.h,
       width: size.width * sizeRate,
-      decoration: const BoxDecoration(color: Colors.grey),
+      decoration: BoxDecoration(color: customColor ?? Colors.grey),
     );
   }
 }

@@ -25,24 +25,24 @@ class CustomBottomNavBar extends StatelessWidget {
           children: <Widget>[
             CustomBottomNavigationBarItem(
               tabsRouter: tabsRouter,
-              activeIcon: Icons.home_filled,
-              icon: Icons.home_outlined,
+              activeIcon: const Icon(Icons.home_filled, size: 30,),
+              icon: const Icon(Icons.home_outlined),
               index: 0,
             ),
             CustomBottomNavigationBarItem(
                 tabsRouter: tabsRouter,
-                activeIcon: Icons.search_sharp,
-                icon: Icons.search_outlined,
+                activeIcon: Image.asset(iconsPath('search.png')),
+                icon: const Icon(Icons.search_outlined),
                 index: 1),
             CustomBottomNavigationBarItem(
                 tabsRouter: tabsRouter,
-                activeIcon: Icons.add_a_photo,
-                icon: Icons.add_a_photo_outlined,
+                activeIcon: const Icon(Icons.add_a_photo, size: 30),
+                icon: const Icon(Icons.add_a_photo_outlined,),
                 index: 2),
             CustomBottomNavigationBarItem(
                 tabsRouter: tabsRouter,
-                activeIcon: Icons.favorite,
-                icon: Icons.favorite_border,
+                activeIcon: const Icon(Icons.favorite, size: 30,),
+                icon: const Icon(Icons.favorite_border),
                 index: 3),
             IconButton(
                 onPressed: () {

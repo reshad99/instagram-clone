@@ -10,11 +10,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     NestedRouter nestedRouter = NestedRouter();
     return ScreenUtilInit(
-      designSize: const Size(360, 800),
+        designSize: const Size(360, 800),
         builder: (context, child) => MaterialApp.router(
               debugShowCheckedModeBanner: false,
               title: 'Instagram clone',
               theme: ThemeData(
+                  textTheme: ThemeData.light().textTheme.apply(
+                        bodyColor: primaryBlackColor,
+                      ),
                   appBarTheme: const AppBarTheme(
                       centerTitle: true,
                       elevation: 0,

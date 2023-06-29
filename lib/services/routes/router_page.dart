@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/presentation/global_widgets/custom_bottom_navigation_bar.dart';
 import 'package:instagram_clone/services/routes/nested_router.gr.dart';
 

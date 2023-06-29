@@ -12,11 +12,11 @@ class NestedRouter extends $NestedRouter {
         AutoRoute(
           page: LoginRoute.page,
         ),
-        AutoRoute(initial: true,page: RouterPage.page, children: [
+        AutoRoute(initial: true, page: RouterPage.page, children: [
           CustomRoute(page: HomeRoute.page),
-          CustomRoute(initial: true, page: SearchRoute.page),
+          CustomRoute(page: SearchRoute.page),
           CustomRoute(page: AddPostRoute.page),
-          CustomRoute(page: HeartRoute.page),
+          CustomRoute(initial: true, page: HeartRoute.page),
           CustomRoute(page: ProfileRoute.page)
         ])
       ];

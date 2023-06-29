@@ -12,8 +12,8 @@ class CustomBottomNavigationBarItem extends StatelessWidget {
   });
 
   final TabsRouter tabsRouter;
-  final IconData activeIcon;
-  final IconData icon;
+  final Widget activeIcon;
+  final Widget icon;
   final Color color = primaryBlackColor;
   final Color activeColor = primaryBlackColor;
   final int index;
@@ -21,11 +21,7 @@ class CustomBottomNavigationBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(
-          tabsRouter.activeIndex == index
-              ? activeIcon
-              : icon,
-          color: tabsRouter.activeIndex == index ? activeColor : color, size: 30,),
+      icon: tabsRouter.activeIndex == index ? activeIcon : icon,
       onPressed: () => tabsRouter.setActiveIndex(index),
     );
   }
