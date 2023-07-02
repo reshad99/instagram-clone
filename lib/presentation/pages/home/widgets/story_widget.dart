@@ -1,16 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
 
 class StoryWidget extends StatelessWidget {
   const StoryWidget({
     Key? key,
     required this.radius,
-    required this.photo, required this.text,
+    required this.photo,
+    this.text,
   }) : super(key: key);
   final double radius;
   final String photo;
-  final String text;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,10 @@ class StoryWidget extends StatelessWidget {
             ),
           ),
         ),
-        Text(text)
+        SizedBox(
+          height: 5.h,
+        ),
+        text != null ? Text(text!) : const SizedBox()
       ],
     );
   }

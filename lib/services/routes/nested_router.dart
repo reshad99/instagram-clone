@@ -16,8 +16,8 @@ class NestedRouter extends $NestedRouter {
           CustomRoute(page: HomeRoute.page),
           CustomRoute(page: SearchRoute.page),
           CustomRoute(page: AddPostRoute.page),
-          CustomRoute(initial: true, page: HeartRoute.page),
-          CustomRoute(page: ProfileRoute.page)
+          CustomRoute(page: HeartRoute.page),
+          CustomRoute(initial: true, page: ProfileRoute.page)
         ])
       ];
 }

@@ -18,13 +18,15 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: appBar(),
       body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        SizedBox(height: 10.h,),
         stories(),
+        SizedBox(height: 10.h,),
         const GreyLine(sizeRate: 1),
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 15),
+              return const Padding(
+                padding: EdgeInsets.only(bottom: 15),
                 child: PostWidget(),
               );
             },
@@ -37,7 +39,7 @@ class HomeScreen extends StatelessWidget {
 
   SizedBox stories() {
     return SizedBox(
-      height: 90.h,
+      height: 110.h,
       child: ListView.builder(
         itemCount: storyData.length,
         itemBuilder: (context, index) {

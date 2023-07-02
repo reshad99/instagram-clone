@@ -10,3 +10,6 @@ const Color primaryBlackColor = Colors.black;
 const Color storyPinkColor = Color.fromRGBO(166, 15, 147, 1);
 const Color storyRedColor = Color.fromRGBO(217, 26, 70, 1);
 const Color storyYellowColor = Color.fromRGBO(251, 170, 71, 1);
+const Color primaryBlueTextColor = Color.fromRGBO(5, 56, 107, 1);
+const Color primaryBlueButtonColor = Color.fromRGBO(55, 151, 239, 1);
+const Color profilePageGreyColor = Color.fromRGBO(199, 199, 204, 1);
