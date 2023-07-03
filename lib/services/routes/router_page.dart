@@ -11,17 +11,17 @@ class RouterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: const [
-        HomeRoute(),
+        HomeRoute(children: []),
         SearchRoute(),
         AddPostRoute(),
         HeartRoute(),
         ProfileRoute()
       ],
       bottomNavigationBuilder: (context, tabsRouter) {
-        return CustomBottomNavBar(tabsRouter: tabsRouter,);
+        return CustomBottomNavBar(
+          tabsRouter: tabsRouter,
+        );
       },
     );
   }
 }
-
-
