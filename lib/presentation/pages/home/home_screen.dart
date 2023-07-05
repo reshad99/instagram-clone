@@ -10,6 +10,9 @@ import 'package:instagram_clone/services/routes/nested_router.gr.dart';
 
 import '../../global_widgets/grey_line.dart';
 
+@RoutePage(name: 'HomeRouter')
+class HomeRouterScreen extends AutoRouter {}
+
 @RoutePage()
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -79,7 +82,9 @@ class HomeScreen extends StatelessWidget {
         IconButton(
           onPressed: () {
             // context.router.replaceAll([const DMRoute()]);
-            AutoRouter.of(context).push(const DMRoute());
+            // AutoRouter.of(context).push(const DMRoute());
+            context.navigateTo(const DMRoute());
+            // context.router.navigate(const DMRoute());
           },
           icon: Image.asset(iconsPath('dm.png')),
         ),

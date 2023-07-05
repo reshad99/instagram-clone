@@ -11,7 +11,7 @@ class RouterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: const [
-        HomeRoute(children: []),
+        HomeRoute(),
         SearchRoute(),
         AddPostRoute(),
         HeartRoute(),
