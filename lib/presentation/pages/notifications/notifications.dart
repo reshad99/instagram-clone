@@ -7,6 +7,9 @@ import 'package:instagram_clone/core/helpers/helpers.dart';
 import 'package:instagram_clone/presentation/global_widgets/grey_line.dart';
 import 'package:instagram_clone/presentation/pages/notifications/widgets/title.dart';
 
+@RoutePage(name: 'HeartRouter')
+class HeartRouterScreen extends AutoRouter {}
+
 @RoutePage()
 class HeartScreen extends StatefulWidget {
   const HeartScreen({super.key});

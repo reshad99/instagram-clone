@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:instagram_clone/services/routes/nested_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
-
 class NestedRouter extends $NestedRouter {
   @override
   RouteType get defaultRouteType => const RouteType.material();
@@ -16,12 +15,13 @@ class NestedRouter extends $NestedRouter {
         AutoRoute(path: '/', page: RouterPage.page, children: [
           AutoRoute(
             path: 'home',
-            page: HomeRoute.page,
+            page: HomeRouter.page,
             children: [
               AutoRoute(
                 path: '',
-                page: DMRoute.page,
+                page: HomeRoute.page,
               ),
+              AutoRoute(page: DMRoute.page, path: 'dm')
             ],
           ),
           CustomRoute(page: SearchRoute.page),

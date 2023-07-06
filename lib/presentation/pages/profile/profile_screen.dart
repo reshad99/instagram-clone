@@ -11,6 +11,9 @@ import 'package:instagram_clone/presentation/pages/profile/widgets/navbar.dart';
 import 'package:instagram_clone/presentation/pages/profile/widgets/profile_stats.dart';
 import 'package:instagram_clone/presentation/pages/profile/widgets/user_info.dart';
 
+@RoutePage(name: 'ProfileRouter')
+class ProfileRouterScreen extends AutoRouter {}
+
 @RoutePage()
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -51,7 +54,6 @@ class _ProfileScreenState extends State<ProfileScreen>
       {'photo': photosPath('profile_post.png')},
       {'photo': photosPath('profile_post.png')},
     ];
-    Size size = MediaQuery.of(context).size;
     return CustomDrawer(
       scaffoldBody: CustomScrollView(
         slivers: <Widget>[

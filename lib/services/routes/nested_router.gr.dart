@@ -49,6 +49,12 @@ abstract class $NestedRouter extends _i10.RootStackRouter {
         child: const _i3.LoginScreen(),
       );
     },
+    HomeRouter.name: (routeData) {
+      return _i10.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i4.HomeRouterScreen(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -61,16 +67,34 @@ abstract class $NestedRouter extends _i10.RootStackRouter {
         child: const _i5.DMScreen(),
       );
     },
+    HeartRouter.name: (routeData) {
+      return _i10.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i6.HeartRouterScreen(),
+      );
+    },
     HeartRoute.name: (routeData) {
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i6.HeartScreen(),
       );
     },
+    ProfileRouter.name: (routeData) {
+      return _i10.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i7.ProfileRouterScreen(),
+      );
+    },
     ProfileRoute.name: (routeData) {
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i7.ProfileScreen(),
+      );
+    },
+    SearchRouter.name: (routeData) {
+      return _i10.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i8.SearchRouterScreen(),
       );
     },
     SearchRoute.name: (routeData) {
@@ -131,6 +155,20 @@ class LoginRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [_i4.HomeRouterScreen]
+class HomeRouter extends _i10.PageRouteInfo<void> {
+  const HomeRouter({List<_i10.PageRouteInfo>? children})
+      : super(
+          HomeRouter.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRouter';
+
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
+}
+
+/// generated route for
 /// [_i4.HomeScreen]
 class HomeRoute extends _i10.PageRouteInfo<void> {
   const HomeRoute({List<_i10.PageRouteInfo>? children})
@@ -159,6 +197,20 @@ class DMRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [_i6.HeartRouterScreen]
+class HeartRouter extends _i10.PageRouteInfo<void> {
+  const HeartRouter({List<_i10.PageRouteInfo>? children})
+      : super(
+          HeartRouter.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HeartRouter';
+
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
+}
+
+/// generated route for
 /// [_i6.HeartScreen]
 class HeartRoute extends _i10.PageRouteInfo<void> {
   const HeartRoute({List<_i10.PageRouteInfo>? children})
@@ -173,6 +225,20 @@ class HeartRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [_i7.ProfileRouterScreen]
+class ProfileRouter extends _i10.PageRouteInfo<void> {
+  const ProfileRouter({List<_i10.PageRouteInfo>? children})
+      : super(
+          ProfileRouter.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRouter';
+
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
+}
+
+/// generated route for
 /// [_i7.ProfileScreen]
 class ProfileRoute extends _i10.PageRouteInfo<void> {
   const ProfileRoute({List<_i10.PageRouteInfo>? children})
@@ -182,6 +248,20 @@ class ProfileRoute extends _i10.PageRouteInfo<void> {
         );
 
   static const String name = 'ProfileRoute';
+
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i8.SearchRouterScreen]
+class SearchRouter extends _i10.PageRouteInfo<void> {
+  const SearchRouter({List<_i10.PageRouteInfo>? children})
+      : super(
+          SearchRouter.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchRouter';
 
   static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
 }

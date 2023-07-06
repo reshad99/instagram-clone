@@ -6,6 +6,9 @@ import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/core/helpers/helpers.dart';
 import 'package:instagram_clone/presentation/global_widgets/custom_textfiedl.dart';
 
+@RoutePage(name: 'SearchRouter')
+class SearchRouterScreen extends AutoRouter {}
+
 @RoutePage()
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
