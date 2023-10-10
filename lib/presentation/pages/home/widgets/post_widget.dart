@@ -10,20 +10,24 @@ import 'package:instagram_clone/presentation/blocs/carousel/carousel_bloc.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/slider_dot.dart';
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({super.key});
+  final int postId;
+  const PostWidget({super.key, required this.postId});
 
   @override
   Widget build(BuildContext context) {
-    var photoList = postData[0]['gallery'] as List<String>;
+    var photoList = postData[postId]['gallery'] as List<String>;
     int currentIndex = 0;
     return Column(
       children: [
         info(),
-        BlocBuilder<CarouselBloc, CarouselState>(
+        BlocBuilder<CarouselBloc, List<CarouselState>>(
           builder: (context, state) {
-            if (state is CarouselUpdated) {
-              currentIndex = state.currentIndex;
+            final carouselState = state[postId];
+
+            if (carouselState is CarouselUpdated) {
+              currentIndex = carouselState.currentIndex;
             }
+
             return photos(photoList, context, currentIndex);
           },
         ),
@@ -186,7 +190,7 @@ class PostWidget extends StatelessWidget {
           enlargeCenterPage: true,
           viewportFraction: 1,
           onPageChanged: (index, reason) {
-            context.read<CarouselBloc>().add(CarouselChanged(index));
+            context.read<CarouselBloc>().add(CarouselChanged(postId, index));
           },
         ));
   }
@@ -197,12 +201,17 @@ class PostWidget extends StatelessWidget {
       height: 20,
       child: ListView.builder(
           itemBuilder: (context, index) {
-            return BlocBuilder<CarouselBloc, CarouselState>(
+            return BlocBuilder<CarouselBloc, List<CarouselState>>(
               builder: (context, state) {
-                return SliderDot(
-                  active:
-                      state is CarouselUpdated && state.currentIndex == index,
-                );
+                final carouselState = state[postId];
+
+                if (carouselState is CarouselUpdated) {
+                  return SliderDot(
+                    active: carouselState.currentIndex == index,
+                  );
+                }
+
+                return SliderDot(active: index == 0);
               },
             );
           },

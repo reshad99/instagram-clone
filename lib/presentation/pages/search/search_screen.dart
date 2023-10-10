@@ -86,6 +86,7 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: CustomTextField(
+          borderRadius: 10,
             prefixIcon: const Icon(Icons.search),
             size: size,
             controller: searchController,

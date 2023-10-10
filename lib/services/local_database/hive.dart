@@ -1,16 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:instagram_clone/data/auth/model/model.dart';
 import 'package:instagram_clone/services/local_database/local_database.dart';
 
 class HiveService implements LocalDatabase {
   late Box<dynamic> _box;
+
   @override
-  Future<dynamic> init([String? boxName]) async {
-    debugPrint('init duse dusdu');
+  Future<void> init([String? boxName]) async {
     await Hive.initFlutter('app');
     _box = await Hive.openBox(boxName ?? 'cache');
-    debugPrint('init duse dusdu. box: $_box');
-    
   }
 
   @override
@@ -50,5 +48,9 @@ class HiveService implements LocalDatabase {
       return Hive.box(boxName);
     }
     return _box;
+  }
+
+  static registerAdapters() {
+    Hive.registerAdapter(UserModelAdapter());
   }
 }

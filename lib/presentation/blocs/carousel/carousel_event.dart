@@ -4,7 +4,9 @@ part of 'carousel_bloc.dart';
 abstract class CarouselEvent {}
 
 class CarouselChanged extends CarouselEvent {
+  final int postId; // Add a postId to identify the post.
   final int currentIndex;
 
-  CarouselChanged(this.currentIndex);
+  CarouselChanged(this.postId, this.currentIndex);
 }
+

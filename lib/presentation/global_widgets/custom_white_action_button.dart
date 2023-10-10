@@ -7,10 +7,12 @@ class CustomWhiteActionButton extends StatelessWidget {
     required this.child,
     this.customColor,
     this.borderRadius,
+    required this.onPressed,
   }) : super(key: key);
   final Widget child;
   final Color? customColor;
   final double? borderRadius;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,9 @@ class CustomWhiteActionButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius ?? 5)),
           side: BorderSide(width: 1, color: Colors.grey.shade400),
         ),
-        onPressed: () {},
+        onPressed: () {
+          onPressed();
+        },
         child: child);
   }
 }

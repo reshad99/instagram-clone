@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/core/helpers/data.dart';
 import 'package:instagram_clone/core/helpers/helpers.dart';
+import 'package:instagram_clone/data/auth/bloc/auth/auth_bloc.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/post_widget.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/story_widget.dart';
-import 'package:instagram_clone/services/routes/nested_router.gr.dart';
 
 import '../../global_widgets/grey_line.dart';
 
@@ -19,8 +20,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = context.read<AuthBloc>();
     return Scaffold(
-      appBar: appBar(context),
+      appBar: appBar(context, authBloc),
       body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         SizedBox(
           height: 10.h,
@@ -33,12 +35,12 @@ class HomeScreen extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return const Padding(
-                padding: EdgeInsets.only(bottom: 15),
-                child: PostWidget(),
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: PostWidget(postId: index),
               );
             },
-            itemCount: 5,
+            itemCount: postData.length,
           ),
         )
       ]),
@@ -65,7 +67,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  AppBar appBar(BuildContext context) {
+  AppBar appBar(BuildContext context, AuthBloc authBloc) {
     return AppBar(
       bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
@@ -81,9 +83,10 @@ class HomeScreen extends StatelessWidget {
         IconButton(onPressed: () {}, icon: Image.asset(iconsPath('igtv.png'))),
         IconButton(
           onPressed: () {
+            authBloc.add(LoggedOut());
             // context.router.replaceAll([const DMRoute()]);
             // AutoRouter.of(context).push(const DMRoute());
-            context.navigateTo(const DMRoute());
+            // context.replaceRoute(const LoginRoute());
             // context.router.navigate(const DMRoute());
           },
           icon: Image.asset(iconsPath('dm.png')),
