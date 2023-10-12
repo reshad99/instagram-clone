@@ -10,3 +10,8 @@ class CarouselChanged extends CarouselEvent {
   CarouselChanged(this.postId, this.currentIndex);
 }
 
+class PostsUpdated extends CarouselEvent {
+  final List<Post> posts;
+
+  PostsUpdated({required this.posts});
+}

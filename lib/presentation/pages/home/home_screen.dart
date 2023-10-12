@@ -6,13 +6,20 @@ import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/core/helpers/data.dart';
 import 'package:instagram_clone/core/helpers/helpers.dart';
 import 'package:instagram_clone/data/auth/bloc/auth/auth_bloc.dart';
+import 'package:instagram_clone/data/home/bloc/post/post_bloc.dart';
+import 'package:instagram_clone/data/home/model/post.dart';
+import 'package:instagram_clone/presentation/global_screens/loading.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/post_widget.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/story_widget.dart';
+import 'package:instagram_clone/services/response/error_handler.dart';
+import 'package:instagram_clone/services/routes/nested_router.gr.dart';
 
 import '../../global_widgets/grey_line.dart';
 
 @RoutePage(name: 'HomeRouter')
-class HomeRouterScreen extends AutoRouter {}
+class HomeRouterScreen extends AutoRouter {
+  const HomeRouterScreen({super.key});
+}
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -21,6 +28,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authBloc = context.read<AuthBloc>();
+    final postBloc = context.read<PostBloc>();
     return Scaffold(
       appBar: appBar(context, authBloc),
       body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -32,16 +40,39 @@ class HomeScreen extends StatelessWidget {
           height: 10.h,
         ),
         const GreyLine(sizeRate: 1),
-        Expanded(
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: PostWidget(postId: index),
+        BlocBuilder<PostBloc, PostState>(
+          bloc: postBloc,
+          builder: (context, state) {
+            if (state is PostLoading) {
+              return const LoadingScreen();
+            }
+
+            if (state is PostError) {
+              ErrorHandler.showError(context, state.errorResponse);
+              return const Center(
+                child: Text('Error occurred'),
               );
-            },
-            itemCount: postData.length,
-          ),
+            }
+
+            if (state is PostLoaded) {
+              return Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    Post post = state.posts[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      child: PostWidget(
+                        post: post,
+                      ),
+                    );
+                  },
+                  itemCount: state.posts.length,
+                ),
+              );
+            }
+
+            return const SizedBox();
+          },
         )
       ]),
     );
@@ -83,11 +114,11 @@ class HomeScreen extends StatelessWidget {
         IconButton(onPressed: () {}, icon: Image.asset(iconsPath('igtv.png'))),
         IconButton(
           onPressed: () {
-            authBloc.add(LoggedOut());
+            // authBloc.add(LoggedOut());
             // context.router.replaceAll([const DMRoute()]);
             // AutoRouter.of(context).push(const DMRoute());
             // context.replaceRoute(const LoginRoute());
-            // context.router.navigate(const DMRoute());
+            context.router.navigate(const DMRoute());
           },
           icon: Image.asset(iconsPath('dm.png')),
         ),

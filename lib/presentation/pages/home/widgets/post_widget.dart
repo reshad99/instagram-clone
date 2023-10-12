@@ -4,34 +4,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/core/constants/sizes.dart';
-import 'package:instagram_clone/core/helpers/data.dart';
 import 'package:instagram_clone/core/helpers/helpers.dart';
+import 'package:instagram_clone/data/home/model/post.dart';
 import 'package:instagram_clone/presentation/blocs/carousel/carousel_bloc.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/slider_dot.dart';
 
 class PostWidget extends StatelessWidget {
-  final int postId;
-  const PostWidget({super.key, required this.postId});
+  final Post post;
+  const PostWidget({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
-    var photoList = postData[postId]['gallery'] as List<String>;
+    var photoList = post.media;
     int currentIndex = 0;
     return Column(
       children: [
         info(),
         BlocBuilder<CarouselBloc, List<CarouselState>>(
           builder: (context, state) {
-            final carouselState = state[postId];
+            final carouselState = state[post.id!];
 
             if (carouselState is CarouselUpdated) {
               currentIndex = carouselState.currentIndex;
             }
 
-            return photos(photoList, context, currentIndex);
+            return photos(photoList!, context, currentIndex);
           },
         ),
-        actions(photoList),
+        actions(photoList!),
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Row(
@@ -126,7 +126,7 @@ class PostWidget extends StatelessWidget {
     );
   }
 
-  Row actions(List<String> photoList) {
+  Row actions(List<Media> photoList) {
     return Row(
       children: [
         IconButton(
@@ -155,14 +155,14 @@ class PostWidget extends StatelessWidget {
   }
 
   CarouselSlider photos(
-      List<String> photoList, BuildContext context, int currentIndex) {
+      List<Media> photoList, BuildContext context, int currentIndex) {
     return CarouselSlider(
         items: photoList.map((image) {
           return Stack(children: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                image,
+              child: Image.network(
+                image.path!,
                 fit: BoxFit.fitWidth,
               ),
             ),
@@ -177,7 +177,7 @@ class PostWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20)),
                 child: Center(
                     child: Text(
-                  '${currentIndex + 1}/3',
+                  '${currentIndex + 1}/${photoList.length}',
                   style: const TextStyle(color: primaryColor),
                 )),
               ),
@@ -190,12 +190,12 @@ class PostWidget extends StatelessWidget {
           enlargeCenterPage: true,
           viewportFraction: 1,
           onPageChanged: (index, reason) {
-            context.read<CarouselBloc>().add(CarouselChanged(postId, index));
+            context.read<CarouselBloc>().add(CarouselChanged(post.id!, index));
           },
         ));
   }
 
-  SizedBox sliderDots(List<String> photoList) {
+  SizedBox sliderDots(List<Media> photoList) {
     return SizedBox(
       width: 50,
       height: 20,
@@ -203,7 +203,7 @@ class PostWidget extends StatelessWidget {
           itemBuilder: (context, index) {
             return BlocBuilder<CarouselBloc, List<CarouselState>>(
               builder: (context, state) {
-                final carouselState = state[postId];
+                final carouselState = state[post.id!];
 
                 if (carouselState is CarouselUpdated) {
                   return SliderDot(
