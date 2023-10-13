@@ -29,5 +29,29 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         emit(PostError(errorResponse: ErrorResponse(message: e.toString())));
       }
     });
+    on<LikePost>((event, emit) async {
+      try {
+        final result = await postService.likePost(event.postId);  
+
+        if (!result) {
+          throw Exception('Error occurred');
+        }
+
+        final List<Post> currentPosts = (state as PostLoaded).posts;
+        final int index =
+            currentPosts.indexWhere((post) => post.id == event.postId);
+        final Post currentPost = currentPosts[index];
+        final bool isLiked = currentPost.liked!;
+
+        currentPost.liked = !isLiked;
+
+        currentPost.likes =
+            isLiked ? currentPost.likes! - 1 : currentPost.likes! + 1;
+
+        emit(PostLoaded(posts: currentPosts));
+      } catch (e) {
+        emit(PostError(errorResponse: ErrorResponse(message: e.toString())));
+      }
+    });
   }
 }

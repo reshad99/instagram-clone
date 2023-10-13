@@ -31,50 +31,55 @@ class HomeScreen extends StatelessWidget {
     final postBloc = context.read<PostBloc>();
     return Scaffold(
       appBar: appBar(context, authBloc),
-      body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(
-          height: 10.h,
-        ),
-        stories(),
-        SizedBox(
-          height: 10.h,
-        ),
-        const GreyLine(sizeRate: 1),
-        BlocBuilder<PostBloc, PostState>(
-          bloc: postBloc,
-          builder: (context, state) {
-            if (state is PostLoading) {
-              return const LoadingScreen();
-            }
+      body: RefreshIndicator(
+        onRefresh: () async {
+          postBloc.add(FetchPosts());
+        },
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          SizedBox(
+            height: 10.h,
+          ),
+          stories(),
+          SizedBox(
+            height: 10.h,
+          ),
+          const GreyLine(sizeRate: 1),
+          Expanded(
+            child: BlocBuilder<PostBloc, PostState>(
+              bloc: postBloc,
+              builder: (context, state) {
+                if (state is PostLoading) {
+                  return const LoadingScreen();
+                }
 
-            if (state is PostError) {
-              ErrorHandler.showError(context, state.errorResponse);
-              return const Center(
-                child: Text('Error occurred'),
-              );
-            }
+                if (state is PostError) {
+                  ErrorHandler.showError(context, state.errorResponse);
+                  return const Center(
+                    child: Text('Error occurred'),
+                  );
+                }
 
-            if (state is PostLoaded) {
-              return Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    Post post = state.posts[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child: PostWidget(
-                        post: post,
-                      ),
-                    );
-                  },
-                  itemCount: state.posts.length,
-                ),
-              );
-            }
+                if (state is PostLoaded) {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      Post post = state.posts[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: PostWidget(
+                          post: post,
+                        ),
+                      );
+                    },
+                    itemCount: state.posts.length,
+                  );
+                }
 
-            return const SizedBox();
-          },
-        )
-      ]),
+                return const LoadingScreen();
+              },
+            ),
+          )
+        ]),
+      ),
     );
   }
 

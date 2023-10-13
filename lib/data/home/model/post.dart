@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:instagram_clone/data/auth/model/model.dart';
+
 Post postFromJson(String str) => Post.fromJson(json.decode(str));
 
 String postToJson(Post data) => json.encode(data.toJson());
@@ -14,6 +16,7 @@ class Post {
     int? likes;
     int? comments;
     bool? liked;
+    UserModel? user;
     List<Media>? media;
 
     Post({
@@ -22,6 +25,7 @@ class Post {
         this.likes,
         this.comments,
         this.liked,
+        this.user,
         this.media,
     });
 
@@ -31,6 +35,7 @@ class Post {
         int? likes,
         int? comments,
         bool? liked,
+        UserModel? user,
         List<Media>? media,
     }) => 
         Post(
@@ -39,6 +44,7 @@ class Post {
             likes: likes ?? this.likes,
             comments: comments ?? this.comments,
             liked: liked ?? this.liked,
+            user: user ?? this.user,
             media: media ?? this.media,
         );
 
@@ -48,6 +54,7 @@ class Post {
         likes: json["likes"],
         comments: json["comments"],
         liked: json["liked"],
+        user: json["user"] == null ? null : UserModel.fromJson(json["user"]),
         media: json["media"] == null ? [] : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
     );
 
@@ -57,6 +64,7 @@ class Post {
         "likes": likes,
         "comments": comments,
         "liked": liked,
+        "user": user?.toJson(),
         "media": media == null ? [] : List<dynamic>.from(media!.map((x) => x.toJson())),
     };
 }

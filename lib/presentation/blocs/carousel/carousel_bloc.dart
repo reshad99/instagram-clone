@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:instagram_clone/data/home/model/post.dart';
 import 'package:meta/meta.dart';
 
@@ -16,7 +17,9 @@ class CarouselBloc extends Bloc<CarouselEvent, List<CarouselState>> {
     });
 
     on<PostsUpdated>((event, emit) {
-      final newState = List<CarouselState>.from(event.posts);
+      final newState =
+          List.generate(event.posts.length, (index) => CarouselInitial());
+      debugPrint('newState: $newState');
       emit(newState);
     });
   }

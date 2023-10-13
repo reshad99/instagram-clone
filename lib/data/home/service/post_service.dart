@@ -9,4 +9,8 @@ class PostService {
   Future<ApiResponse> getPosts() {
     return postRepository.fetchPosts();
   }
+
+  Future<bool> likePost(int postId) {
+    return postRepository.likePost(postId);
+  }
 }
