@@ -11,6 +11,10 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     required this.hint,
     this.prefixIcon,
+    this.autoFocus,
+    this.fieldSubmitted,
+    this.textInputAction,
+    this.validator,
     required this.borderRadius,
   }) : super(key: key);
   final Size size;
@@ -18,15 +22,33 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final Widget? prefixIcon;
   final double borderRadius;
+  final bool? autoFocus;
+  final TextInputAction? textInputAction;
+  final Function()? fieldSubmitted;
+  final Function(String? value)? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: (value) {
+        return validator!(value);
+      },
+      onFieldSubmitted: (value) {
+        fieldSubmitted!();
+      },
+      textInputAction: textInputAction ?? TextInputAction.done,
+      autofocus: autoFocus ?? false,
       controller: controller,
       decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius), borderSide: BorderSide.none),
-        disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius), borderSide: BorderSide.none),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius), borderSide: BorderSide.none),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+              borderSide: BorderSide.none),
+          disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+              borderSide: BorderSide.none),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+              borderSide: BorderSide.none),
           prefixIcon: prefixIcon ?? const SizedBox(),
           contentPadding:
               EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),

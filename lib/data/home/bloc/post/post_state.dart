@@ -18,3 +18,7 @@ final class PostLoaded extends PostState {
 
   PostLoaded({required this.posts});
 }
+
+
+//comments
+

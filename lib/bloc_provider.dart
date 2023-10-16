@@ -3,6 +3,7 @@ import 'package:instagram_clone/core/helpers/data.dart';
 import 'package:instagram_clone/data/auth/bloc/auth/auth_bloc.dart';
 import 'package:instagram_clone/data/auth/bloc/login/login_bloc.dart';
 import 'package:instagram_clone/data/auth/bloc/register/register_bloc.dart';
+import 'package:instagram_clone/data/home/bloc/comment/comment_bloc.dart';
 import 'package:instagram_clone/data/home/bloc/post/post_bloc.dart';
 import 'package:instagram_clone/presentation/global_screens/my_app.dart';
 
@@ -20,6 +21,9 @@ class BlocProviderInit {
         ),
         BlocProvider(
           create: (context) => postBloc,
+        ),
+        BlocProvider(
+          create: (context) => CommentBloc(),
         ),
         BlocProvider(
           create: (context) => LoginBloc(authBloc),

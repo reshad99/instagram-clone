@@ -10,3 +10,5 @@ final class LikePost extends PostEvent {
 
   LikePost({required this.postId});
 }
+
+

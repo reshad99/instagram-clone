@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:instagram_clone/data/home/model/comment.dart';
 import 'package:instagram_clone/data/home/model/post.dart';
 import 'package:instagram_clone/data/home/repository/post_repository.dart';
 import 'package:instagram_clone/data/home/response/post_response.dart';
@@ -29,14 +30,9 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         emit(PostError(errorResponse: ErrorResponse(message: e.toString())));
       }
     });
+
     on<LikePost>((event, emit) async {
       try {
-        final result = await postService.likePost(event.postId);  
-
-        if (!result) {
-          throw Exception('Error occurred');
-        }
-
         final List<Post> currentPosts = (state as PostLoaded).posts;
         final int index =
             currentPosts.indexWhere((post) => post.id == event.postId);
@@ -49,6 +45,12 @@ class PostBloc extends Bloc<PostEvent, PostState> {
             isLiked ? currentPost.likes! - 1 : currentPost.likes! + 1;
 
         emit(PostLoaded(posts: currentPosts));
+
+        final result = await postService.likePost(event.postId);
+
+        if (!result) {
+          throw Exception('Error occurred');
+        }
       } catch (e) {
         emit(PostError(errorResponse: ErrorResponse(message: e.toString())));
       }

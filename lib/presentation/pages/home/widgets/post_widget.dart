@@ -5,21 +5,66 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/core/constants/sizes.dart';
 import 'package:instagram_clone/core/helpers/helpers.dart';
+import 'package:instagram_clone/data/home/bloc/comment/comment_bloc.dart';
 import 'package:instagram_clone/data/home/bloc/post/post_bloc.dart';
 import 'package:instagram_clone/data/home/model/post.dart';
 import 'package:instagram_clone/presentation/blocs/carousel/carousel_bloc.dart';
+import 'package:instagram_clone/presentation/pages/home/pages/comments.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/slider_dot.dart';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
   final Post post;
   const PostWidget({super.key, required this.post});
 
   @override
+  State<PostWidget> createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation colorAnimation;
+  late Animation<double> sizeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+
+    colorAnimation = ColorTween(begin: Colors.grey.shade400, end: Colors.red)
+        .animate(
+            CurvedAnimation(parent: animationController, curve: Curves.easeIn));
+    sizeAnimation = TweenSequence(<TweenSequenceItem<double>>[
+      TweenSequenceItem(tween: Tween(begin: 1, end: 30), weight: 1),
+      TweenSequenceItem(tween: Tween(begin: 30, end: 50), weight: 50),
+      TweenSequenceItem(tween: Tween(begin: 50, end: 70), weight: 70),
+      TweenSequenceItem(tween: Tween(begin: 70, end: 50), weight: 50),
+      TweenSequenceItem(tween: Tween(begin: 50, end: 30), weight: 50),
+    ]).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeIn));
+
+    animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        animationController.reset();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var photoList = post.media;
+    var photoList = widget.post.media;
     int currentIndex = 0;
-    int carouselStateId = post.id! - 1;
+    int carouselStateId = widget.post.id! - 1;
     final postBloc = context.read<PostBloc>();
+    final commentBloc = context.read<CommentBloc>();
     return Column(
       children: [
         info(),
@@ -35,7 +80,7 @@ class PostWidget extends StatelessWidget {
                 photoList!, context, postBloc, currentIndex, carouselStateId);
           },
         ),
-        actions(photoList!, postBloc, carouselStateId),
+        actions(photoList!, postBloc, commentBloc, carouselStateId),
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Row(
@@ -61,7 +106,7 @@ class PostWidget extends StatelessWidget {
                     // ),
                     // TextSpan(text: ' and'),
                     TextSpan(
-                      text: '${post.likes} like',
+                      text: '${widget.post.likes} like',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -86,9 +131,9 @@ class PostWidget extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                          text: post.user!.username,
+                          text: widget.post.user!.username,
                           style: const TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: " ${post.description}")
+                      TextSpan(text: " ${widget.post.description}")
                     ],
                   ),
                   overflow: TextOverflow
@@ -110,7 +155,7 @@ class PostWidget extends StatelessWidget {
       title: Row(
         children: [
           Text(
-            post.user!.username!,
+            widget.post.user!.username!,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(
@@ -131,16 +176,21 @@ class PostWidget extends StatelessWidget {
     );
   }
 
-  Row actions(List<Media> photoList, PostBloc postBloc, int carouselStateId) {
+  Row actions(List<Media> photoList, PostBloc postBloc, CommentBloc commentBloc,
+      int carouselStateId) {
     return Row(
       children: [
         IconButton(
             onPressed: () {
-              postBloc.add(LikePost(postId: post.id!));
+              postBloc.add(LikePost(postId: widget.post.id!));
             },
-            icon: post.liked! ? likedIcon() : unLikedIcon()),
+            icon: widget.post.liked! ? likedIcon() : unLikedIcon()),
         IconButton(
-            onPressed: () {}, icon: Image.asset(iconsPath('comment-icon.png'))),
+            onPressed: () {
+              _showModalBottomSheet();
+              commentBloc.add(ShowComments(postId: widget.post.id!));
+            },
+            icon: Image.asset(iconsPath('comment-icon.png'))),
         IconButton(onPressed: () {}, icon: Image.asset(iconsPath('dm.png'))),
         const SizedBox(
           width: 30,
@@ -177,47 +227,69 @@ class PostWidget extends StatelessWidget {
       PostBloc postBloc, int currentIndex, int carouselStateId) {
     return GestureDetector(
       onDoubleTap: () {
-        postBloc.add(LikePost(postId: post.id!));
+        postBloc.add(LikePost(postId: widget.post.id!));
+        animationController.forward();
       },
-      child: CarouselSlider(
-          items: photoList.map((image) {
-            return Stack(children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Image.network(
-                  image.path!,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              Positioned(
-                right: 10,
-                top: 10,
-                child: Container(
-                  width: 50,
-                  height: 30,
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Center(
-                      child: Text(
-                    '${currentIndex + 1}/${photoList.length}',
-                    style: const TextStyle(color: primaryColor),
-                  )),
-                ),
-              )
-            ]);
-          }).toList(),
-          options: CarouselOptions(
-            enableInfiniteScroll: false,
-            height: 300,
-            enlargeCenterPage: true,
-            viewportFraction: 1,
-            onPageChanged: (index, reason) {
-              context
-                  .read<CarouselBloc>()
-                  .add(CarouselChanged(carouselStateId, index));
-            },
-          )),
+      child: Stack(
+        children: [
+          CarouselSlider(
+              items: photoList.map((image) {
+                return Stack(children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 300,
+                    child: Image.network(
+                      image.path!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                    right: 10,
+                    top: 10,
+                    child: Container(
+                      width: 50,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Center(
+                          child: Text(
+                        '${currentIndex + 1}/${photoList.length}',
+                        style: const TextStyle(color: primaryColor),
+                      )),
+                    ),
+                  )
+                ]);
+              }).toList(),
+              options: CarouselOptions(
+                enableInfiniteScroll: false,
+                height: 300,
+                enlargeCenterPage: true,
+                viewportFraction: 1,
+                onPageChanged: (index, reason) {
+                  context
+                      .read<CarouselBloc>()
+                      .add(CarouselChanged(carouselStateId, index));
+                },
+              )),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: AnimatedBuilder(
+              animation: animationController,
+              builder: (context, child) {
+                return Icon(
+                  Icons.favorite,
+                  color: colorAnimation.value,
+                  size: sizeAnimation.value,
+                );
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -243,6 +315,25 @@ class PostWidget extends StatelessWidget {
           },
           itemCount: photoList.length,
           scrollDirection: Axis.horizontal),
+    );
+  }
+
+  void _showModalBottomSheet() {
+    Size size = MediaQuery.of(context).size;
+    showModalBottomSheet(
+      isScrollControlled: true,
+      useSafeArea: true,
+      enableDrag: true,
+      constraints: BoxConstraints(
+          maxHeight: size.height,
+          maxWidth: size.width,
+          minHeight: size.height * 0.5),
+      context: context,
+      builder: (context) {
+        return CommentScreen(
+          postId: widget.post.id!,
+        );
+      },
     );
   }
 }
