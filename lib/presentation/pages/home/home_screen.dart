@@ -9,6 +9,7 @@ import 'package:instagram_clone/data/auth/bloc/auth/auth_bloc.dart';
 import 'package:instagram_clone/data/home/bloc/post/post_bloc.dart';
 import 'package:instagram_clone/data/home/model/post.dart';
 import 'package:instagram_clone/presentation/global_screens/loading.dart';
+import 'package:instagram_clone/presentation/models/carousel.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/post_widget.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/story_widget.dart';
 import 'package:instagram_clone/services/response/error_handler.dart';
@@ -64,10 +65,14 @@ class HomeScreen extends StatelessWidget {
                     return ListView.builder(
                       itemBuilder: (context, index) {
                         Post post = state.posts[index];
+                        Carousel carousel =
+                            Carousel(postId: post.id!, currentIndex: 0);
+
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 15),
                           child: PostWidget(
                             post: post,
+                            carousel: carousel,
                           ),
                         );
                       },

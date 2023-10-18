@@ -42,7 +42,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
           if (currentState is CommentsLoaded) {
             debugPrint('state is commentsloaded');
             final updatedState = List<Comment>.from(currentState.comments)
-              ..add(result.data!);
+              ..insert(0, result.data!);
             emit(CommentsLoaded(comments: updatedState));
           }
         } else if (result is ErrorResponse) {

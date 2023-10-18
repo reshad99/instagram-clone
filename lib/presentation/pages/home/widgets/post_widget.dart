@@ -9,12 +9,14 @@ import 'package:instagram_clone/data/home/bloc/comment/comment_bloc.dart';
 import 'package:instagram_clone/data/home/bloc/post/post_bloc.dart';
 import 'package:instagram_clone/data/home/model/post.dart';
 import 'package:instagram_clone/presentation/blocs/carousel/carousel_bloc.dart';
+import 'package:instagram_clone/presentation/models/carousel.dart';
 import 'package:instagram_clone/presentation/pages/home/pages/comments.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/slider_dot.dart';
 
 class PostWidget extends StatefulWidget {
   final Post post;
-  const PostWidget({super.key, required this.post});
+  final Carousel carousel;
+  const PostWidget({super.key, required this.post, required this.carousel});
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -61,26 +63,23 @@ class _PostWidgetState extends State<PostWidget>
   @override
   Widget build(BuildContext context) {
     var photoList = widget.post.media;
-    int currentIndex = 0;
-    int carouselStateId = widget.post.id! - 1;
     final postBloc = context.read<PostBloc>();
     final commentBloc = context.read<CommentBloc>();
     return Column(
       children: [
         info(),
-        BlocBuilder<CarouselBloc, List<CarouselState>>(
+        BlocBuilder<CarouselBloc, CarouselState>(
           builder: (context, state) {
-            final carouselState = state[carouselStateId];
-
-            if (carouselState is CarouselUpdated) {
-              currentIndex = carouselState.currentIndex;
+            int currentIndex = 0;
+            if (state is CarouselUpdated &&
+                state.carousel.postId == widget.carousel.postId) {
+              currentIndex = state.carousel.currentIndex;
             }
-
-            return photos(
-                photoList!, context, postBloc, currentIndex, carouselStateId);
+            return photos(photoList!, context, postBloc, currentIndex,
+                widget.carousel.postId);
           },
         ),
-        actions(photoList!, postBloc, commentBloc, carouselStateId),
+        actions(photoList!, postBloc, commentBloc, widget.carousel.postId),
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Row(
@@ -195,7 +194,7 @@ class _PostWidgetState extends State<PostWidget>
         const SizedBox(
           width: 30,
         ),
-        sliderDots(photoList, carouselStateId),
+        sliderDots(photoList),
         const Spacer(),
         IconButton(
             onPressed: () {},
@@ -239,6 +238,7 @@ class _PostWidgetState extends State<PostWidget>
                     width: MediaQuery.of(context).size.width,
                     height: 300,
                     child: Image.network(
+                      alignment: Alignment.topCenter,
                       image.path!,
                       fit: BoxFit.cover,
                     ),
@@ -269,7 +269,7 @@ class _PostWidgetState extends State<PostWidget>
                 onPageChanged: (index, reason) {
                   context
                       .read<CarouselBloc>()
-                      .add(CarouselChanged(carouselStateId, index));
+                      .add(CarouselChanged(widget.carousel, index));
                 },
               )),
           Positioned(
@@ -293,19 +293,18 @@ class _PostWidgetState extends State<PostWidget>
     );
   }
 
-  SizedBox sliderDots(List<Media> photoList, int carouselStateId) {
+  SizedBox sliderDots(List<Media> photoList) {
     return SizedBox(
       width: 50,
       height: 20,
       child: ListView.builder(
           itemBuilder: (context, index) {
-            return BlocBuilder<CarouselBloc, List<CarouselState>>(
+            return BlocBuilder<CarouselBloc, CarouselState>(
               builder: (context, state) {
-                final carouselState = state[carouselStateId];
-
-                if (carouselState is CarouselUpdated) {
+                if (state is CarouselUpdated &&
+                    state.carousel.postId == widget.carousel.postId) {
                   return SliderDot(
-                    active: carouselState.currentIndex == index,
+                    active: state.carousel.currentIndex == index,
                   );
                 }
 

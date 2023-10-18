@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:instagram_clone/data/home/model/comment.dart';
+import 'package:instagram_clone/data/home/bloc/file/file_bloc.dart';
 import 'package:instagram_clone/data/home/model/post.dart';
 import 'package:instagram_clone/data/home/repository/post_repository.dart';
+import 'package:instagram_clone/data/home/request/post_request.dart';
+import 'package:instagram_clone/data/home/response/add_post_response.dart';
 import 'package:instagram_clone/data/home/response/post_response.dart';
 import 'package:instagram_clone/data/home/service/post_service.dart';
 import 'package:instagram_clone/presentation/blocs/carousel/carousel_bloc.dart';
@@ -14,7 +16,8 @@ part 'post_state.dart';
 class PostBloc extends Bloc<PostEvent, PostState> {
   final postService = PostService(postRepository: PostRepository());
   final CarouselBloc carouselBloc;
-  PostBloc(this.carouselBloc) : super(PostInitial()) {
+  final FileBloc fileBloc;
+  PostBloc(this.carouselBloc, this.fileBloc) : super(PostInitial()) {
     on<FetchPosts>((event, emit) async {
       emit(PostLoading());
       try {
@@ -22,7 +25,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
         if (result is PostResponse) {
           emit(PostLoaded(posts: result.data!));
-          carouselBloc.add(PostsUpdated(posts: result.data!));
         } else if (result is ErrorResponse) {
           emit(PostError(errorResponse: result));
         }
@@ -50,6 +52,25 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
         if (!result) {
           throw Exception('Error occurred');
+        }
+      } catch (e) {
+        emit(PostError(errorResponse: ErrorResponse(message: e.toString())));
+      }
+    });
+
+    on<AddPost>((event, emit) async {
+      try {
+        final result = await postService.addPost(event.postRequest);
+        final currentState = state;
+
+        if (result is AddPostResponse && currentState is PostLoaded) {
+          final updatedState = List<Post>.from(currentState.posts)
+            ..insert(0, result.data!);
+
+          emit(PostLoaded(posts: updatedState));
+          fileBloc.add(FilesAdded());
+        } else if (result is ErrorResponse) {
+          emit(PostError(errorResponse: result));
         }
       } catch (e) {
         emit(PostError(errorResponse: ErrorResponse(message: e.toString())));
