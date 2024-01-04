@@ -7,5 +7,4 @@ Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setUpLocator();
   await locator<LocalDatabase>().init('cache');
-  HiveService.registerAdapters();
 }

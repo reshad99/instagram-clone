@@ -16,16 +16,22 @@ class CustomTextField extends StatelessWidget {
     this.textInputAction,
     this.validator,
     required this.borderRadius,
+    this.onChanged,
+    this.focusNode,
+    this.suffixIcon,
   }) : super(key: key);
   final Size size;
   final TextEditingController controller;
   final String hint;
   final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final double borderRadius;
   final bool? autoFocus;
   final TextInputAction? textInputAction;
   final Function()? fieldSubmitted;
+  final Function(String value)? onChanged;
   final Function(String? value)? validator;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +40,16 @@ class CustomTextField extends StatelessWidget {
         return validator!(value);
       },
       onFieldSubmitted: (value) {
-        fieldSubmitted!();
+        if (fieldSubmitted != null) {
+          fieldSubmitted!();
+        }
       },
+      onChanged: (value) {
+        if (onChanged != null) {
+          onChanged!(value);
+        }
+      },
+      focusNode: focusNode,
       textInputAction: textInputAction ?? TextInputAction.done,
       autofocus: autoFocus ?? false,
       controller: controller,
@@ -50,6 +64,7 @@ class CustomTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius),
               borderSide: BorderSide.none),
           prefixIcon: prefixIcon ?? const SizedBox(),
+          suffixIcon: suffixIcon ?? const SizedBox(),
           contentPadding:
               EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
           hintText: hint,

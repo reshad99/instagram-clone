@@ -11,27 +11,26 @@ class RouterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      bloc: context.read<AuthBloc>(),
-      builder: (context, state) {
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
         if (state is AuthUnauthenticated) {
-          context.replaceRoute(const LoginRoute());
+          context.navigateTo(const LoginRoute());
         }
-        return AutoTabsScaffold(
-          routes: const [
-            HomeRoute(),
-            SearchRoute(),
-            AddPostRoute(),
-            HeartRoute(),
-            ProfileRoute()
-          ],
-          bottomNavigationBuilder: (context, tabsRouter) {
-            return CustomBottomNavBar(
-              tabsRouter: tabsRouter,
-            );
-          },
-        );
       },
+      child: AutoTabsScaffold(
+        routes: [
+          const HomeRoute(),
+          const SearchRoute(),
+          const AddPostRoute(),
+          const HeartRoute(),
+          ProfileRoute(isMe: true)
+        ],
+        bottomNavigationBuilder: (context, tabsRouter) {
+          return CustomBottomNavBar(
+            tabsRouter: tabsRouter,
+          );
+        },
+      ),
     );
   }
 }

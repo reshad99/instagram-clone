@@ -4,120 +4,82 @@
 
 import 'dart:convert';
 
+import 'package:hive_flutter/adapters.dart';
 import 'package:instagram_clone/data/auth/model/model.dart';
+import 'package:instagram_clone/presentation/models/media.dart';
+part 'post.g.dart';
 
 Post postFromJson(String str) => Post.fromJson(json.decode(str));
 
 String postToJson(Post data) => json.encode(data.toJson());
 
+@HiveType(typeId: 2)
 class Post {
-    int? id;
-    String? description;
-    int? likes;
-    int? comments;
-    bool? liked;
-    UserModel? user;
-    List<Media>? media;
+  @HiveField(0)
+  int? id;
+  @HiveField(1)
+  String? description;
+  @HiveField(2)
+  int? likes;
+  @HiveField(3)
+  int? comments;
+  @HiveField(4)
+  bool? liked;
+  @HiveField(5)
+  UserModel? user;
+  @HiveField(6)
+  List<Media>? media;
 
-    Post({
-        this.id,
-        this.description,
-        this.likes,
-        this.comments,
-        this.liked,
-        this.user,
-        this.media,
-    });
+  Post({
+    this.id,
+    this.description,
+    this.likes,
+    this.comments,
+    this.liked,
+    this.user,
+    this.media,
+  });
 
-    Post copyWith({
-        int? id,
-        String? description,
-        int? likes,
-        int? comments,
-        bool? liked,
-        UserModel? user,
-        List<Media>? media,
-    }) => 
-        Post(
-            id: id ?? this.id,
-            description: description ?? this.description,
-            likes: likes ?? this.likes,
-            comments: comments ?? this.comments,
-            liked: liked ?? this.liked,
-            user: user ?? this.user,
-            media: media ?? this.media,
-        );
+  Post copyWith({
+    int? id,
+    String? description,
+    int? likes,
+    int? comments,
+    bool? liked,
+    UserModel? user,
+    List<Media>? media,
+  }) =>
+      Post(
+        id: id ?? this.id,
+        description: description ?? this.description,
+        likes: likes ?? this.likes,
+        comments: comments ?? this.comments,
+        liked: liked ?? this.liked,
+        user: user ?? this.user,
+        media: media ?? this.media,
+      );
 
-    factory Post.fromJson(Map<String, dynamic> json) => Post(
+  factory Post.fromJson(Map<String, dynamic> json) => Post(
         id: json["id"],
         description: json["description"],
         likes: json["likes"],
         comments: json["comments"],
         liked: json["liked"],
         user: json["user"] == null ? null : UserModel.fromJson(json["user"]),
-        media: json["media"] == null ? [] : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
-    );
+        media: json["media"] == null
+            ? []
+            : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "description": description,
         "likes": likes,
         "comments": comments,
         "liked": liked,
         "user": user?.toJson(),
-        "media": media == null ? [] : List<dynamic>.from(media!.map((x) => x.toJson())),
-    };
-}
-
-class Media {
-    String? path;
-    String? extension;
-    String? mimeType;
-    String? fileSize;
-    String? width;
-    String? height;
-
-    Media({
-        this.path,
-        this.extension,
-        this.mimeType,
-        this.fileSize,
-        this.width,
-        this.height,
-    });
-
-    Media copyWith({
-        String? path,
-        String? extension,
-        String? mimeType,
-        String? fileSize,
-        String? width,
-        String? height,
-    }) => 
-        Media(
-            path: path ?? this.path,
-            extension: extension ?? this.extension,
-            mimeType: mimeType ?? this.mimeType,
-            fileSize: fileSize ?? this.fileSize,
-            width: width ?? this.width,
-            height: height ?? this.height,
-        );
-
-    factory Media.fromJson(Map<String, dynamic> json) => Media(
-        path: json["path"],
-        extension: json["extension"],
-        mimeType: json["mime_type"],
-        fileSize: json["file_size"],
-        width: json["width"],
-        height: json["height"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "path": path,
-        "extension": extension,
-        "mime_type": mimeType,
-        "file_size": fileSize,
-        "width": width,
-        "height": height,
-    };
+        "media": media == null
+            ? []
+            : List<dynamic>.from(media!.map((x) => x.toJson())),
+      };
 }

@@ -21,6 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           authBloc.add(LoggedIn(result.user!, token: result.accessToken!));
           emit(LoginInitial());
         } else if (result is ErrorResponse) {
+
           emit(LoginError(errorResponse: result));
         }
       } catch (e) {

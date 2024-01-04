@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
 import 'package:instagram_clone/core/helpers/helpers.dart';
-import 'package:instagram_clone/presentation/pages/home/widgets/story_widget.dart';
+import 'package:instagram_clone/presentation/pages/home/widgets/profile_photo_widget.dart';
 
 class Highlights extends StatelessWidget {
   const Highlights({
@@ -46,8 +46,11 @@ class Highlights extends StatelessWidget {
 
             return Padding(
               padding: EdgeInsets.only(right: 10.w),
-              child: StoryWidget(
-                  radius: 80, photo: photosPath('own-pp.jpg'), text: 'Friends'),
+              child: ProfilePhotoWidget(
+                  isMe: true,
+                  radius: 80,
+                  photo: photosPath('own-pp.jpg'),
+                  text: 'Friends'),
             );
           },
           itemCount: 5,

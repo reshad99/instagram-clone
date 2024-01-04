@@ -29,7 +29,19 @@ class UserModel {
   dynamic image;
 
   @HiveField(5)
+  int? followerCount;
+
+  @HiveField(6)
+  int? followCount;
+
+  @HiveField(7)
+  int? postCount;
+
+  @HiveField(8)
   dynamic thumbnailImage;
+
+  @HiveField(9)
+  bool? followed;
 
   UserModel({
     this.id,
@@ -37,7 +49,11 @@ class UserModel {
     this.email,
     this.phone,
     this.image,
+    this.followerCount,
+    this.followCount,
+    this.postCount,
     this.thumbnailImage,
+    this.followed,
   });
 
   UserModel copyWith({
@@ -46,7 +62,11 @@ class UserModel {
     String? email,
     String? phone,
     dynamic image,
+    int? followerCount,
+    int? followCount,
+    int? postCount,
     dynamic thumbnailImage,
+    dynamic followed,
   }) =>
       UserModel(
         id: id ?? this.id,
@@ -54,6 +74,9 @@ class UserModel {
         email: email ?? this.email,
         phone: phone ?? this.phone,
         image: image ?? this.image,
+        followerCount: followerCount ?? this.followerCount,
+        followCount: image ?? this.followCount,
+        postCount: image ?? this.postCount,
         thumbnailImage: thumbnailImage ?? this.thumbnailImage,
       );
 
@@ -63,7 +86,11 @@ class UserModel {
         email: json["email"],
         phone: json["phone"],
         image: json["image"],
+        followerCount: json["follower_count"],
+        followCount: json["follow_count"],
+        postCount: json["post_count"],
         thumbnailImage: json["thumbnail_image"],
+        followed: json["followed"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,6 +99,10 @@ class UserModel {
         "email": email,
         "phone": phone,
         "image": image,
+        "follower_count": followerCount,
+        "follow_count": followCount,
+        "post_count": postCount,
         "thumbnail_image": thumbnailImage,
+        "followed": followed,
       };
 }

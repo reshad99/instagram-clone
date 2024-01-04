@@ -1,5 +1,7 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:instagram_clone/data/auth/model/model.dart';
+import 'package:instagram_clone/data/home/model/post.dart';
+import 'package:instagram_clone/presentation/models/media.dart';
 import 'package:instagram_clone/services/local_database/local_database.dart';
 
 class HiveService implements LocalDatabase {
@@ -8,6 +10,7 @@ class HiveService implements LocalDatabase {
   @override
   Future<void> init([String? boxName]) async {
     await Hive.initFlutter('app');
+    await registerAdapters();
     _box = await Hive.openBox(boxName ?? 'cache');
   }
 
@@ -52,5 +55,7 @@ class HiveService implements LocalDatabase {
 
   static registerAdapters() {
     Hive.registerAdapter(UserModelAdapter());
+    Hive.registerAdapter(MediaAdapter());
+    Hive.registerAdapter(PostAdapter());
   }
 }

@@ -46,7 +46,7 @@ class NavBar extends StatelessWidget {
             icon: getIcon('discover_people.png'),
             text: 'Disvover People',
           ),
-          Spacer(),
+          const Spacer(),
           NavbarButton(
             icon: getIcon('settings.png'),
             text: 'Settings',

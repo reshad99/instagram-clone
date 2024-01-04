@@ -22,14 +22,18 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       email: fields[2] as String?,
       phone: fields[3] as String?,
       image: fields[4] as dynamic,
-      thumbnailImage: fields[5] as dynamic,
+      followerCount: fields[5] as int?,
+      followCount: fields[6] as int?,
+      postCount: fields[7] as int?,
+      thumbnailImage: fields[8] as dynamic,
+      followed: fields[9] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +45,15 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..writeByte(4)
       ..write(obj.image)
       ..writeByte(5)
-      ..write(obj.thumbnailImage);
+      ..write(obj.followerCount)
+      ..writeByte(6)
+      ..write(obj.followCount)
+      ..writeByte(7)
+      ..write(obj.postCount)
+      ..writeByte(8)
+      ..write(obj.thumbnailImage)
+      ..writeByte(9)
+      ..write(obj.followed);
   }
 
   @override

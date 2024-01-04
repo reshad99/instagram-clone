@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/core/constants/colors.dart';
+import 'package:instagram_clone/data/auth/bloc/auth/auth_bloc.dart';
 import 'package:instagram_clone/services/routes/nested_router.dart';
 
 class MyApp extends StatelessWidget {
@@ -8,7 +10,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NestedRouter nestedRouter = NestedRouter();
+    AuthBloc authBloc = context.read<AuthBloc>();
+    NestedRouter nestedRouter = NestedRouter(authBloc: authBloc);
     return ScreenUtilInit(
         designSize: const Size(360, 800),
         builder: (context, child) => MaterialApp.router(
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
                   textTheme: ThemeData.light().textTheme.apply(
                         bodyColor: primaryBlackColor,
                       ),
-                      scaffoldBackgroundColor: Colors.white,
+                  scaffoldBackgroundColor: Colors.white,
                   appBarTheme: const AppBarTheme(
                       centerTitle: true,
                       elevation: 0,

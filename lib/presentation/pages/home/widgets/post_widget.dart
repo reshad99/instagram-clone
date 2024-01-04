@@ -10,6 +10,7 @@ import 'package:instagram_clone/data/home/bloc/post/post_bloc.dart';
 import 'package:instagram_clone/data/home/model/post.dart';
 import 'package:instagram_clone/presentation/blocs/carousel/carousel_bloc.dart';
 import 'package:instagram_clone/presentation/models/carousel.dart';
+import 'package:instagram_clone/presentation/models/media.dart';
 import 'package:instagram_clone/presentation/pages/home/pages/comments.dart';
 import 'package:instagram_clone/presentation/pages/home/widgets/slider_dot.dart';
 

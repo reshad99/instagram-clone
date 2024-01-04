@@ -20,7 +20,7 @@ class ApiService {
 
       return statusCode >= 200 && statusCode < 500;
     };
-    _dio.interceptors.add(PrettyDioLogger());
+    // _dio.interceptors.add(PrettyDioLogger());
   }
 
   Dio get sendRequest => _dio;
